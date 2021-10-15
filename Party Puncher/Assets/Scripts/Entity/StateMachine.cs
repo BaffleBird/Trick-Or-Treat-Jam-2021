@@ -5,13 +5,11 @@ using UnityEngine;
 public class StateMachine : MonoBehaviour
 {
 	#region MajorComponents
-	/*
 	[SerializeField] EntityStatus _myStatus = null;
 	public EntityStatus myStatus => _myStatus;
 
 	[SerializeField] InputHandler _myInputs = null;
 	public InputHandler myInputs => _myInputs;
-	*/
 
 	[SerializeField] Rigidbody2D _myRigidbody = null;
 	public Rigidbody2D myRigidbody => _myRigidbody;
@@ -27,21 +25,21 @@ public class StateMachine : MonoBehaviour
 	protected Dictionary<string, State> States = new Dictionary<string, State>();
 	protected State currentState = null;
 	protected string _previousState = "";
-	public string previousState { get { return _previousState; } }
+	public string previousState => _previousState;
 	#endregion
 
 	protected virtual void Update()
 	{
 		if (currentState != null)
 			currentState.UpdateState();
-		//myStatus.UpdateCooldowns();
+		myStatus.UpdateCooldowns();
 	}
 
 	protected virtual void FixedUpdate()
 	{
 		currentState.FixedUpdateState();
 		//myRigidbody.Move(currentState.MotionUpdate() * Time.fixedDeltaTime);
-		//myStatus.currentMovement = currentState.MotionUpdate();
+		myStatus.currentMovement = currentState.MotionUpdate();
 	}
 
 	protected virtual void LateUpdate()
@@ -60,10 +58,10 @@ public class StateMachine : MonoBehaviour
 
 	public void SwitchState(string stateName)
 	{
-		//if (myStatus.GetCooldown(stateName))
-		//{
-		//	SwitchState(States[stateName]);
-		//}
+		if (myStatus.GetCooldown(stateName))
+		{
+			SwitchState(States[stateName]);
+		}
 	}
 }
 

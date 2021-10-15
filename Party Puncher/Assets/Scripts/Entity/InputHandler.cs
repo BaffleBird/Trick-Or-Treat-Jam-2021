@@ -11,7 +11,6 @@ public class InputHandler : MonoBehaviour
 	public Vector2 PointerInput => pointerInput;
 	public void ResetPointerInput() { pointerInput = Vector2.zero; }
 
-
 	protected Dictionary<string, bool> inputs = new Dictionary<string, bool>();
 
 	public bool GetInput(string s) => inputs[s];
