@@ -6,7 +6,6 @@ using System.Linq;
 [CreateAssetMenu(menuName = "Scritable Object/Entity Status")]
 public class EntityStatus : ScriptableObject
 {
-
 	public string currentState = "";
 
 	public Vector2 currentMovement;
