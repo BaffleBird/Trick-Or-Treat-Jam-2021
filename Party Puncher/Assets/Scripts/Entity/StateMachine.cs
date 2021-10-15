@@ -14,8 +14,8 @@ public class StateMachine : MonoBehaviour
 	[SerializeField] Rigidbody2D _myRigidbody = null;
 	public Rigidbody2D myRigidbody => _myRigidbody;
 
-	[SerializeField] GameObject _myModel = null;
-	public GameObject myModel => _myModel;
+	[SerializeField] Collider2D _myCollider = null;
+	public Collider2D myCollider => _myCollider;
 
 	[SerializeField] Animator _myAnimator = null;
 	public Animator myAnimator => _myAnimator;
@@ -38,7 +38,7 @@ public class StateMachine : MonoBehaviour
 	protected virtual void FixedUpdate()
 	{
 		currentState.FixedUpdateState();
-		//myRigidbody.Move(currentState.MotionUpdate() * Time.fixedDeltaTime);
+		myRigidbody.MovePosition(myRigidbody.position + currentState.MotionUpdate() * Time.fixedDeltaTime);
 		myStatus.currentMovement = currentState.MotionUpdate();
 	}
 
