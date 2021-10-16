@@ -28,3 +28,15 @@ public class PlayerStateMachine : StateMachine
 		myStatus.currentState = currentState.StateName;
 	}
 }
+
+
+public abstract class Player_State : State
+{
+	protected PlayerStateMachine PSM;
+
+	public Player_State(string name, PlayerStateMachine stateMachine) : base(name, stateMachine)
+	{
+		_stateName = name;
+		PSM = stateMachine;
+	}
+}
