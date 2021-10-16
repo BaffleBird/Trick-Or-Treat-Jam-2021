@@ -8,9 +8,8 @@ public class GameManager : MonoBehaviour
     //Set of scene names
     public enum Scene
     {
-        MainMenu,
-        GameScene,
-        Display
+        MainMenuScene,
+        GameScene
     }
 
     //Load function for game scenes

@@ -5,14 +5,26 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject displayPopup;
+
+    public void Start()
+    {
+        displayPopup.transform.localScale = Vector2.zero;
+    }
+
     public void StartButton()
     {
         GameManager.Load(GameManager.Scene.GameScene);
     }
 
-    public void DisplayButton()
+    public void DisplayOpen()
     {
-        //Text
+        displayPopup.transform.LeanScale(Vector2.one, 0.5f);
+    }
+
+    public void DisplayClose()
+    {
+        displayPopup.transform.LeanScale(Vector2.zero, 0.5f);
     }
 
     public void QuitButton()
