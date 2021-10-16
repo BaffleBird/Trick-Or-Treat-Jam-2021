@@ -69,7 +69,7 @@ public abstract class State
 {
 	protected StateMachine SM;
 
-	string _stateName = null;
+	protected string _stateName = null;
 	public string StateName { get { return _stateName; } }
 
 	public State(string name, StateMachine stateMachine)

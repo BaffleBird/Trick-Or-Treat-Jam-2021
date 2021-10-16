@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State_Player_Idle : State
+public class State_Player_Idle : Player_State
 {
 	Vector2 currentMotion;
 
-	public State_Player_Idle(string name, StateMachine stateMachine) : base(name, stateMachine) { }
+	public State_Player_Idle(string name, PlayerStateMachine stateMachine) : base(name, stateMachine) { }
 
 	public override void StartState()
 	{
@@ -35,12 +35,12 @@ public class State_Player_Idle : State
 	}
 }
 
-public class State_Player_Move : State
+public class State_Player_Move : Player_State
 {
 	float moveSpeed = 6f;
 	Vector3 currentMotion;
 
-	public State_Player_Move(string name, StateMachine stateMachine) : base(name, stateMachine) { }
+	public State_Player_Move(string name, PlayerStateMachine stateMachine) : base(name, stateMachine) { }
 
 	
 	public override void StartState()
@@ -69,12 +69,12 @@ public class State_Player_Move : State
 	}
 }
 
-public class State_Player_Sprint : State
+public class State_Player_Sprint : Player_State
 {
 	float sprintSpeed = 10f;
 	Vector3 currentMotion;
 
-	public State_Player_Sprint(string name, StateMachine stateMachine) : base(name, stateMachine) { }
+	public State_Player_Sprint(string name, PlayerStateMachine stateMachine) : base(name, stateMachine) { }
 
 	public override void StartState()
 	{
