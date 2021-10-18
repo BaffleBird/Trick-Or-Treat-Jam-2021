@@ -5,16 +5,23 @@ using UnityEngine.AI;
 
 public class NPC_StateMachine : StateMachine
 {
-	[SerializeField] Transform _target;
-	public Transform target => _target;
-
-	NavMeshAgent agent;
+	NavMeshAgent _agent;
+	public NavMeshAgent agent => _agent;
 
 	protected void Awake()
 	{
-		//currentState = States[nameof(State_Player_Idle)];
+		States.Add(nameof(State_NPC_Idle), new State_NPC_Idle(nameof(State_NPC_Idle), this));
+		States.Add(nameof(State_NPC_Move), new State_NPC_Move(nameof(State_NPC_Move), this));
+
+		_myStatus = new EntityStatus();
+
+		currentState = States[nameof(State_NPC_Idle)];
 		_previousState = currentState.StateName;
 		currentState.StartState();
+
+		_agent = GetComponent<NavMeshAgent>();
+		_agent.updateRotation = false;
+		_agent.updateUpAxis = false;
 	}
 
 	protected override void Update()

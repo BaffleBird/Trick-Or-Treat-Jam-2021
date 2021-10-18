@@ -10,6 +10,8 @@ public class PlayerStateMachine : StateMachine
 		States.Add(nameof(State_Player_Move), new State_Player_Move(nameof(State_Player_Move), this)); //myStatus.SetCooldown("Jump", 0);
 		States.Add(nameof(State_Player_Sprint), new State_Player_Sprint(nameof(State_Player_Sprint), this));
 
+		_myStatus = new EntityStatus();
+
 		currentState = States[nameof(State_Player_Idle)];
 		_previousState = currentState.StateName;
 		currentState.StartState();

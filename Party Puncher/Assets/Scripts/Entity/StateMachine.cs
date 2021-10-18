@@ -5,19 +5,19 @@ using UnityEngine;
 public class StateMachine : MonoBehaviour
 {
 	#region MajorComponents
-	[SerializeField] EntityStatus _myStatus = null;
+	[SerializeField] protected EntityStatus _myStatus = null;
 	public EntityStatus myStatus => _myStatus;
 
-	[SerializeField] InputHandler _myInputs = null;
+	[SerializeField] protected InputHandler _myInputs = null;
 	public InputHandler myInputs => _myInputs;
 
-	[SerializeField] Rigidbody2D _myRigidbody = null;
+	[SerializeField] protected Rigidbody2D _myRigidbody = null;
 	public Rigidbody2D myRigidbody => _myRigidbody;
 
-	[SerializeField] Collider2D _myCollider = null;
+	[SerializeField] protected Collider2D _myCollider = null;
 	public Collider2D myCollider => _myCollider;
 
-	[SerializeField] Animator _myAnimator = null;
+	[SerializeField] protected Animator _myAnimator = null;
 	public Animator myAnimator => _myAnimator;
 	#endregion
 
