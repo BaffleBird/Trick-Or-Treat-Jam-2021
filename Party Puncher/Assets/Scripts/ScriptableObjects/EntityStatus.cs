@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-[CreateAssetMenu(menuName = "Scritable Object/Entity Status")]
-public class EntityStatus : ScriptableObject
+public class EntityStatus
 {
 	public string currentState = "";
 
