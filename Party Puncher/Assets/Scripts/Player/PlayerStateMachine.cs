@@ -21,13 +21,18 @@ public class PlayerStateMachine : StateMachine
 	{
 		base.Update();
 		TextUpdate.Instance.SetText("State", myStatus.currentState);
-		TextUpdate.Instance.SetText("Sprint", myInputs.GetInput("Sprint").ToString());
 	}
 
 	protected override void SwitchState(State newState)
 	{
 		base.SwitchState(newState);
 		myStatus.currentState = currentState.StateName;
+	}
+
+	protected override void OnDrawGizmos()
+	{
+		if (currentState != null)
+			currentState.TestUpdate();
 	}
 }
 

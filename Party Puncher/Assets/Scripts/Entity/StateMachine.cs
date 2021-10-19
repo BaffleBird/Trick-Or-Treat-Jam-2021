@@ -19,6 +19,9 @@ public class StateMachine : MonoBehaviour
 
 	[SerializeField] protected Animator _myAnimator = null;
 	public Animator myAnimator => _myAnimator;
+
+	[SerializeField] protected SpriteRenderer _mySprite = null;
+	public SpriteRenderer mySprite => _mySprite;
 	#endregion
 
 	#region StateVariables
@@ -63,6 +66,11 @@ public class StateMachine : MonoBehaviour
 			SwitchState(States[stateName]);
 		}
 	}
+
+	protected virtual void OnDrawGizmos()
+	{
+		
+	}
 }
 
 public abstract class State
@@ -82,6 +90,7 @@ public abstract class State
 	public abstract void UpdateState();
 	public virtual void FixedUpdateState() { }
 	public virtual void LateUpdateState() { }
+	public virtual void TestUpdate() { }
 	public abstract Vector2 MotionUpdate();
 	public abstract void EndState();
 }

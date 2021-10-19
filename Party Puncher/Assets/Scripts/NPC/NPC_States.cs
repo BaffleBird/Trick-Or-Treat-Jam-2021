@@ -13,7 +13,11 @@ public class State_NPC_Idle : NPC_State
 
 	public override void UpdateState()
 	{
-		if (SM.myInputs.GetInput(nameof(State_NPC_Move)))
+		if (SM.myInputs.GetInput(nameof(State_NPC_Knockdown)))
+		{
+			SM.SwitchState(nameof(State_NPC_Knockdown));
+		}
+		else if (SM.myInputs.GetInput(nameof(State_NPC_Move)))
 		{
 			SM.SwitchState(nameof(State_NPC_Move));
 		}
@@ -48,7 +52,11 @@ public class State_NPC_Move : NPC_State
 
 	public override void UpdateState()
 	{
-		if (SM.myInputs.GetInput(nameof(State_NPC_Idle)))
+		if (SM.myInputs.GetInput(nameof(State_NPC_Knockdown)))
+		{
+			SM.SwitchState(nameof(State_NPC_Knockdown));
+		}
+		else if (SM.myInputs.GetInput(nameof(State_NPC_Idle)))
 		{
 			SM.SwitchState(nameof(State_NPC_Idle));
 		}
@@ -68,5 +76,38 @@ public class State_NPC_Move : NPC_State
 	{
 		SM.myInputs.ResetInput(nameof(State_NPC_Move));
 		NPC_SM.agent.SetDestination(NPC_SM.transform.position);
+	}
+}
+
+public class State_NPC_Knockdown : NPC_State
+{
+	Vector2 currentMotion;
+
+	public State_NPC_Knockdown(string name, NPC_StateMachine stateMachine) : base(name, stateMachine) { }
+
+	public override void StartState()
+	{
+		SM.myInputs.ResetInput(nameof(State_NPC_Knockdown));
+		currentMotion = SM.myInputs.MoveInput;
+		SM.gameObject.layer = LayerMask.NameToLayer("NPCdown");
+		NPC_SM.agent.enabled = false;
+	}
+
+	public override void UpdateState()
+	{
+		if(currentMotion.sqrMagnitude < 0.01f)
+			SM.SwitchState(nameof(State_NPC_Idle));
+	}
+
+	public override Vector2 MotionUpdate()
+	{
+		currentMotion = Vector2.Lerp(currentMotion, Vector2.zero, 0.1f);
+		return currentMotion;
+	}
+
+	public override void EndState()
+	{
+		SM.gameObject.layer = LayerMask.NameToLayer("NPC");
+		NPC_SM.agent.enabled = true;
 	}
 }

@@ -12,6 +12,7 @@ public class NPC_StateMachine : StateMachine
 	{
 		States.Add(nameof(State_NPC_Idle), new State_NPC_Idle(nameof(State_NPC_Idle), this));
 		States.Add(nameof(State_NPC_Move), new State_NPC_Move(nameof(State_NPC_Move), this));
+		States.Add(nameof(State_NPC_Knockdown), new State_NPC_Knockdown(nameof(State_NPC_Knockdown), this));
 
 		_myStatus = new EntityStatus();
 
@@ -33,6 +34,12 @@ public class NPC_StateMachine : StateMachine
 	{
 		base.SwitchState(newState);
 		myStatus.currentState = currentState.StateName;
+	}
+
+	public void Knockdown(Vector2 direction, float power) //Feed it position and Vector
+	{
+		myInputs.ForceMove(direction * power);
+		myInputs.ForceInput(nameof(State_NPC_Knockdown));
 	}
 }
 

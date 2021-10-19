@@ -9,6 +9,8 @@ public class EntityStatus
 
 	public Vector2 currentMovement;
 
+	public Vector2 influenceVector;
+
 	Dictionary<string, float> myCooldowns = new Dictionary<string, float>();
 
 	//COOLDOWN MANAGEMENT
