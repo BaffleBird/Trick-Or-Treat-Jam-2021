@@ -9,8 +9,6 @@ public class EntityStatus
 
 	public Vector2 currentMovement;
 
-	public Vector2 influenceVector;
-
 	Dictionary<string, float> myCooldowns = new Dictionary<string, float>();
 
 	//COOLDOWN MANAGEMENT
@@ -22,7 +20,7 @@ public class EntityStatus
 			myCooldowns[key] = cooldown;
 	}
 
-	public bool GetCooldown(string actionName)
+	public bool GetCooldownReady(string actionName)
 	{
 		if (myCooldowns.ContainsKey(actionName))
 			return myCooldowns[actionName] <= 0;

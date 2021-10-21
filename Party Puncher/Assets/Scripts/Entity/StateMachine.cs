@@ -61,7 +61,7 @@ public class StateMachine : MonoBehaviour
 
 	public void SwitchState(string stateName)
 	{
-		if (myStatus.GetCooldown(stateName))
+		if (myStatus.GetCooldownReady(stateName))
 		{
 			SwitchState(States[stateName]);
 		}

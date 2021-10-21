@@ -28,5 +28,17 @@ public class TestNavmeshThings : MonoBehaviour
             randomCirclePoint = hit.position;
 
         return randomCirclePoint;
-	}    
+	}
+
+    public static Vector3 GetRandomMeshPoint(float radius, Vector3 position)
+	{
+        Vector3 randomCirclePoint = Random.insideUnitCircle * radius;
+        randomCirclePoint += position;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomCirclePoint, out hit, radius, 1))
+            randomCirclePoint = hit.position;
+
+        return randomCirclePoint;
+    }
 }

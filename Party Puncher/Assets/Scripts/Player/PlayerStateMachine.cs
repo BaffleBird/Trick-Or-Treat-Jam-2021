@@ -4,11 +4,22 @@ using UnityEngine;
 
 public class PlayerStateMachine : StateMachine
 {
+	[SerializeField] GameObject _candyPrefab;
+	public GameObject candyPrefab => _candyPrefab;
+
+	[SerializeField] ParticleSystem _candyParticles;
+	public ParticleSystem candyParticles => _candyParticles;
+
+	[SerializeField] SpriteRenderer _aimSprite;
+	public SpriteRenderer aimSprite => _aimSprite;
+
 	protected void Awake()
 	{
 		States.Add(nameof(State_Player_Idle), new State_Player_Idle(nameof(State_Player_Idle), this));
 		States.Add(nameof(State_Player_Move), new State_Player_Move(nameof(State_Player_Move), this)); //myStatus.SetCooldown("Jump", 0);
 		States.Add(nameof(State_Player_Sprint), new State_Player_Sprint(nameof(State_Player_Sprint), this));
+		States.Add(nameof(State_Player_ReadyCandy), new State_Player_ReadyCandy(nameof(State_Player_ReadyCandy), this));
+		States.Add(nameof(State_Player_ThrowCandy), new State_Player_ThrowCandy(nameof(State_Player_ThrowCandy), this));
 
 		_myStatus = new EntityStatus();
 

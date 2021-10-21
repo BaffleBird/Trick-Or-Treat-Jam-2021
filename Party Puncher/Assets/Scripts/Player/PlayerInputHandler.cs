@@ -15,6 +15,7 @@ public class PlayerInputHandler : InputHandler
 		inputs.Add("Sprint", false);
 		inputs.Add("Attack", false);
 		inputs.Add("AttackHold", false);
+		inputs.Add("ThrowCandy", false);
 
 		playerControls.PlayerInGameButtons.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
 		playerControls.PlayerInGameButtons.Move.canceled += ctx => moveInput = ctx.ReadValue<Vector2>();
@@ -27,6 +28,8 @@ public class PlayerInputHandler : InputHandler
 		playerControls.PlayerInGameButtons.AttackHold.canceled += ctx => inputs["AttackHold"] = false;
 		playerControls.PlayerInGameButtons.Attack.canceled += ctx => inputs["AttackHold"] = false;
 
+		playerControls.PlayerInGameButtons.ThrowCandy.performed += ctx => inputs["ThrowCandy"] = true;
+		playerControls.PlayerInGameButtons.ThrowCandy.canceled += ctx => inputs["ThrowCandy"] = false;
 	}
 
 	private void OnEnable()

@@ -49,6 +49,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ThrowCandy"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb87c098-5d7f-4513-aba6-3d4bd9df4cf4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [
@@ -150,6 +158,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""AttackHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3d62265-9161-4623-97cf-bf26997fd969"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThrowCandy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -174,6 +193,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlayerInGameButtons_Sprint = m_PlayerInGameButtons.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerInGameButtons_Attack = m_PlayerInGameButtons.FindAction("Attack", throwIfNotFound: true);
         m_PlayerInGameButtons_AttackHold = m_PlayerInGameButtons.FindAction("AttackHold", throwIfNotFound: true);
+        m_PlayerInGameButtons_ThrowCandy = m_PlayerInGameButtons.FindAction("ThrowCandy", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,6 +247,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerInGameButtons_Sprint;
     private readonly InputAction m_PlayerInGameButtons_Attack;
     private readonly InputAction m_PlayerInGameButtons_AttackHold;
+    private readonly InputAction m_PlayerInGameButtons_ThrowCandy;
     public struct PlayerInGameButtonsActions
     {
         private @PlayerControls m_Wrapper;
@@ -235,6 +256,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Sprint => m_Wrapper.m_PlayerInGameButtons_Sprint;
         public InputAction @Attack => m_Wrapper.m_PlayerInGameButtons_Attack;
         public InputAction @AttackHold => m_Wrapper.m_PlayerInGameButtons_AttackHold;
+        public InputAction @ThrowCandy => m_Wrapper.m_PlayerInGameButtons_ThrowCandy;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInGameButtons; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -256,6 +278,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @AttackHold.started -= m_Wrapper.m_PlayerInGameButtonsActionsCallbackInterface.OnAttackHold;
                 @AttackHold.performed -= m_Wrapper.m_PlayerInGameButtonsActionsCallbackInterface.OnAttackHold;
                 @AttackHold.canceled -= m_Wrapper.m_PlayerInGameButtonsActionsCallbackInterface.OnAttackHold;
+                @ThrowCandy.started -= m_Wrapper.m_PlayerInGameButtonsActionsCallbackInterface.OnThrowCandy;
+                @ThrowCandy.performed -= m_Wrapper.m_PlayerInGameButtonsActionsCallbackInterface.OnThrowCandy;
+                @ThrowCandy.canceled -= m_Wrapper.m_PlayerInGameButtonsActionsCallbackInterface.OnThrowCandy;
             }
             m_Wrapper.m_PlayerInGameButtonsActionsCallbackInterface = instance;
             if (instance != null)
@@ -272,6 +297,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @AttackHold.started += instance.OnAttackHold;
                 @AttackHold.performed += instance.OnAttackHold;
                 @AttackHold.canceled += instance.OnAttackHold;
+                @ThrowCandy.started += instance.OnThrowCandy;
+                @ThrowCandy.performed += instance.OnThrowCandy;
+                @ThrowCandy.canceled += instance.OnThrowCandy;
             }
         }
     }
@@ -291,5 +319,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnAttackHold(InputAction.CallbackContext context);
+        void OnThrowCandy(InputAction.CallbackContext context);
     }
 }

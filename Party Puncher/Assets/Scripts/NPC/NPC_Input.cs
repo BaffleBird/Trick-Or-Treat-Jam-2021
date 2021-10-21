@@ -11,14 +11,13 @@ public class NPC_Input : InputHandler
 		AddInput(nameof(State_NPC_Move));
 		//inputs.Add("Follow", false);
 		//inputs.Add("Flee", false);
-		//inputs.Add("PickUp", false);
 		AddInput(nameof(State_NPC_Knockdown));
-		//inputs.Add("KnockOut", false);
-		//inputs.Add("GetUp", false);
+		AddInput(nameof(State_NPC_GoForCandy));
 	}
 
 	private void Update()
 	{
+		//Stick some simple AI stuff here
 		if(Keyboard.current.qKey.wasPressedThisFrame)
 		{
 			inputs[nameof(State_NPC_Move)] = true;
