@@ -3,39 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
-    // Prevent non-singleton constructor use
-    protected GameManager() { }
+    public static GameManager Instance;
+    AudioSource audioSource;
 
-    // Add whatever code to the class you need as you normally would
-    public string MyTestString = "Hello world!";
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        // Initial menu music can be loaded at start
+        // Use awake to check scene for corresponding scene music
+        audioSource.clip = Resources.Load<AudioClip>("Music/Map");
+    }
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    public void PlaySound()
+    {
+        audioSource.Play();
+    }
+
+    public void PauseSound()
+    {
+        audioSource.Pause();
+    }
 
     // Set of scene names
     public enum Scene
     {
         MainMenuScene,
-        GameScene
+        GameScene,
+        TestMusic1,
+        TestMusic2
     }
 
     // Load function for game scenes
     public static void Load(Scene scene)
     {
         SceneManager.LoadScene(scene.ToString());
-    }
-
-    public void getNumber()
-    {
-        return;
-    }
-}
-
-
-public class Testing : MonoBehaviour
-{
-    // test
-    private void OnEnable()
-    {
-        Debug.Log(GameManager.Instance.MyTestString);
     }
 }

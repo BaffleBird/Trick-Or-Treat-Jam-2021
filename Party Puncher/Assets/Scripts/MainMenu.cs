@@ -31,4 +31,10 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    // Test scene for music persistence; delete later
+    public void MusicButton()
+    {
+        GameManager.Load(GameManager.Scene.TestMusic1);
+    }
 }
