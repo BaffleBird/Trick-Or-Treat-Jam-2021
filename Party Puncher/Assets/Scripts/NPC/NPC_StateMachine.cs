@@ -12,6 +12,10 @@ public class NPC_StateMachine : StateMachine
 	{
 		States.Add(nameof(State_NPC_Idle), new State_NPC_Idle(nameof(State_NPC_Idle), this));
 		States.Add(nameof(State_NPC_Move), new State_NPC_Move(nameof(State_NPC_Move), this));
+		States.Add(nameof(State_NPC_Knockdown), new State_NPC_Knockdown(nameof(State_NPC_Knockdown), this));
+		States.Add(nameof(State_NPC_GetUp), new State_NPC_GetUp(nameof(State_NPC_GetUp), this));
+		States.Add(nameof(State_NPC_GoForCandy), new State_NPC_GoForCandy(nameof(State_NPC_GoForCandy), this));
+		States.Add(nameof(State_NPC_GrabCandy), new State_NPC_GrabCandy(nameof(State_NPC_GrabCandy), this));
 
 		_myStatus = new EntityStatus();
 
@@ -22,6 +26,8 @@ public class NPC_StateMachine : StateMachine
 		_agent = GetComponent<NavMeshAgent>();
 		_agent.updateRotation = false;
 		_agent.updateUpAxis = false;
+		_agent.speed = Random.Range(2, 3.5f);
+		_agent.SetDestination(transform.position);
 	}
 
 	protected override void Update()
@@ -33,6 +39,20 @@ public class NPC_StateMachine : StateMachine
 	{
 		base.SwitchState(newState);
 		myStatus.currentState = currentState.StateName;
+	}
+
+	public void Knockdown(Vector2 direction, float power, bool fear) //Feed it position and Vector
+	{
+		myInputs.ForceMove(direction * power);
+		myInputs.ForceInput(nameof(State_NPC_Knockdown));
+	}
+
+	public void CandyPull(float pullTime, Vector2 targetPosition)
+	{
+		if (myStatus.GetCooldownReady("GrabbinCandy"))
+			myInputs.ForceMove(targetPosition);
+		myStatus.SetCooldown("GrabbinCandy", pullTime);
+		myInputs.ForceInput(nameof(State_NPC_GoForCandy));
 	}
 }
 

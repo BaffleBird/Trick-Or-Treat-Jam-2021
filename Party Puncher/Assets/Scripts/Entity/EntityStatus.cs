@@ -20,7 +20,7 @@ public class EntityStatus
 			myCooldowns[key] = cooldown;
 	}
 
-	public bool GetCooldown(string actionName)
+	public bool GetCooldownReady(string actionName)
 	{
 		if (myCooldowns.ContainsKey(actionName))
 			return myCooldowns[actionName] <= 0;

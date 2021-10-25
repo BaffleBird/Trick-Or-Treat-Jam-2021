@@ -87,8 +87,8 @@ public static class MathHelper
 		return (targetX * movementVector.x) + ( targetY * movementVector.y);
 	}
 
-	//Check which direction from a vector
-	public static float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up) // With reference to a different up direction
+	//Check which direction a target vector is from a forward direction wih respect to a given up vector
+	public static float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
 	{
 		Vector3 perp = Vector3.Cross(fwd, targetDir);
 		float dir = Vector3.Dot(perp, up);
@@ -111,7 +111,7 @@ public static class MathHelper
 			return 0f;
 	}
 
-	//The Absolute-Absolute difference
+	//The Absolute-Absolute difference. As in make everything positive.
 	public static float AbAbDifference(float a, float b)
 	{
 		return Mathf.Abs(Mathf.Abs(a) - Mathf.Abs(b));

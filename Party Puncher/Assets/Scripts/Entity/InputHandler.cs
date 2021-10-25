@@ -20,17 +20,22 @@ public class InputHandler : MonoBehaviour
 		inputs[inputName] = false;
 	}
 
-	public void ForceInput(string inputName)
-	{
-		inputs[inputName] = true;
-	}
-
 	public void ResetAllInputs()
 	{
 		foreach (var key in inputs.Keys.ToList())
 		{
 			inputs[key] = false;
 		}
+	}
+
+	public void ForceInput(string inputName)
+	{
+		inputs[inputName] = true;
+	}
+
+	public void ForceMove(Vector2 forceMove)
+	{
+		moveInput = forceMove;
 	}
 
 	public void AddInput(string inputName)
