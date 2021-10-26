@@ -12,10 +12,10 @@ public class PlayerInputHandler : InputHandler
 	{
 		playerControls = new PlayerControls();
 
-		inputs.Add("Sprint", false);
-		inputs.Add("Attack", false);
-		inputs.Add("AttackHold", false);
-		inputs.Add("ThrowCandy", false);
+		AddInput("Sprint");
+		AddInput("Attack");
+		AddInput("AttackHold");
+		AddInput("ThrowCandy");
 
 		playerControls.PlayerInGameButtons.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
 		playerControls.PlayerInGameButtons.Move.canceled += ctx => moveInput = ctx.ReadValue<Vector2>();

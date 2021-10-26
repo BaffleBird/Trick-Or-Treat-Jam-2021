@@ -20,6 +20,7 @@ public class PlayerStateMachine : StateMachine
 		States.Add(nameof(State_Player_Sprint), new State_Player_Sprint(nameof(State_Player_Sprint), this));
 		States.Add(nameof(State_Player_ReadyCandy), new State_Player_ReadyCandy(nameof(State_Player_ReadyCandy), this));
 		States.Add(nameof(State_Player_ThrowCandy), new State_Player_ThrowCandy(nameof(State_Player_ThrowCandy), this));
+		States.Add(nameof(State_Player_Shove), new State_Player_Shove(nameof(State_Player_Shove), this));
 
 		_myStatus = new EntityStatus();
 

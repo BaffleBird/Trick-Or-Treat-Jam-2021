@@ -5,15 +5,16 @@ using UnityEngine.AI;
 
 public class NPC_StateMachine : StateMachine
 {
-	NavMeshAgent _agent;
+	protected NavMeshAgent _agent;
 	public NavMeshAgent agent => _agent;
 
-	protected void Awake()
+	void Awake()
 	{
 		States.Add(nameof(State_NPC_Idle), new State_NPC_Idle(nameof(State_NPC_Idle), this));
 		States.Add(nameof(State_NPC_Move), new State_NPC_Move(nameof(State_NPC_Move), this));
 		States.Add(nameof(State_NPC_Knockdown), new State_NPC_Knockdown(nameof(State_NPC_Knockdown), this));
 		States.Add(nameof(State_NPC_GetUp), new State_NPC_GetUp(nameof(State_NPC_GetUp), this));
+		States.Add(nameof(State_NPC_Leave), new State_NPC_Leave(nameof(State_NPC_Leave), this));
 		States.Add(nameof(State_NPC_GoForCandy), new State_NPC_GoForCandy(nameof(State_NPC_GoForCandy), this));
 		States.Add(nameof(State_NPC_GrabCandy), new State_NPC_GrabCandy(nameof(State_NPC_GrabCandy), this));
 
@@ -41,18 +42,37 @@ public class NPC_StateMachine : StateMachine
 		myStatus.currentState = currentState.StateName;
 	}
 
-	public void Knockdown(Vector2 direction, float power, bool fear) //Feed it position and Vector
+	public void ResetNPC()
+	{
+		myInputs.ResetAllInputs();
+		_agent.speed = Random.Range(2, 3.5f);
+		_agent.nextPosition = transform.position;
+		_agent.updatePosition = true;
+	}
+
+	private void OnEnable()
+	{
+		SwitchState(States[nameof(State_NPC_Idle)]);
+	}
+
+	public virtual void Knockdown(Vector2 direction, float power, bool fear) //Feed it a direction to be pushed, how powerful it is, and whether or not it causes fear
 	{
 		myInputs.ForceMove(direction * power);
 		myInputs.ForceInput(nameof(State_NPC_Knockdown));
+		if (fear) Flee();
 	}
 
-	public void CandyPull(float pullTime, Vector2 targetPosition)
+	public virtual void CandyPull(float pullTime, Vector2 targetPosition) //Feed it the amount of time to be distracted, and where it should go be distracted
 	{
 		if (myStatus.GetCooldownReady("GrabbinCandy"))
 			myInputs.ForceMove(targetPosition);
 		myStatus.SetCooldown("GrabbinCandy", pullTime);
 		myInputs.ForceInput(nameof(State_NPC_GoForCandy));
+	}
+
+	public void Flee()
+	{
+		myInputs.ForceInput(nameof(State_NPC_Leave));
 	}
 }
 

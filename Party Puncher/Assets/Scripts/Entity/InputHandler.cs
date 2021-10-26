@@ -13,13 +13,28 @@ public class InputHandler : MonoBehaviour
 
 	protected Dictionary<string, bool> inputs = new Dictionary<string, bool>();
 
-	public bool GetInput(string s) => inputs[s];
+	//Get a particular Input
+	public bool GetInput(string s)
+	{
+		if (inputs.ContainsKey(s))
+		{
+			return inputs[s];
+		}
+		else
+		{
+			Debug.Log("Input: " + s + " Not Found");
+			return false;
+		}
+		
+	}
 
+	//Reset an Input
 	public void ResetInput(string inputName)
 	{
 		inputs[inputName] = false;
 	}
 
+	//Reset all the Inputs in the dictionary to false
 	public void ResetAllInputs()
 	{
 		foreach (var key in inputs.Keys.ToList())
@@ -28,19 +43,24 @@ public class InputHandler : MonoBehaviour
 		}
 	}
 
+	//Force set an Input
 	public void ForceInput(string inputName)
 	{
 		inputs[inputName] = true;
 	}
 
+	//Force set the Move Input
 	public void ForceMove(Vector2 forceMove)
 	{
 		moveInput = forceMove;
 	}
 
+	//Add input with it's name as a key
 	public void AddInput(string inputName)
 	{
 		if (!inputs.ContainsKey(inputName))
 			inputs.Add(inputName, false);
 	}
+
+	//public vo
 }
