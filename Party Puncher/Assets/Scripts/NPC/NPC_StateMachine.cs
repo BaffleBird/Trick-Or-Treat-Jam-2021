@@ -8,6 +8,12 @@ public class NPC_StateMachine : StateMachine
 	protected NavMeshAgent _agent;
 	public NavMeshAgent agent => _agent;
 
+	[SerializeField] SpriteRenderer _myShadow;
+	public SpriteRenderer myShadow => _myShadow;
+
+	[SerializeField] GameObject _candyDrop;
+	public GameObject candyDrop => _candyDrop;
+
 	void Awake()
 	{
 		States.Add(nameof(State_NPC_Idle), new State_NPC_Idle(nameof(State_NPC_Idle), this));
@@ -42,7 +48,7 @@ public class NPC_StateMachine : StateMachine
 		myStatus.currentState = currentState.StateName;
 	}
 
-	public void ResetNPC()
+	public virtual void ResetNPC()
 	{
 		myInputs.ResetAllInputs();
 		_agent.speed = Random.Range(2, 3.5f);
@@ -53,6 +59,7 @@ public class NPC_StateMachine : StateMachine
 	private void OnEnable()
 	{
 		SwitchState(States[nameof(State_NPC_Idle)]);
+		agent.speed = Random.Range(2, 3.5f);
 	}
 
 	public virtual void Knockdown(Vector2 direction, float power, bool fear) //Feed it a direction to be pushed, how powerful it is, and whether or not it causes fear

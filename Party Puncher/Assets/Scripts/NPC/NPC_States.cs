@@ -9,7 +9,7 @@ public class State_NPC_Idle : NPC_State
 	public override void StartState()
 	{
 		SM.myInputs.ResetInput(nameof(State_NPC_Idle));
-		SM.myAnimator.Play("Idle");
+		SM.myAnimator.Play("Idle", 0, Random.value);
 	}
 
 	public override void UpdateState()
@@ -112,17 +112,11 @@ public class State_NPC_Move : NPC_State
 
 public class State_NPC_Leave : NPC_State
 {
-	Vector2 currentTarget;
-	float distanceLimit;
-
 	public State_NPC_Leave(string name, NPC_StateMachine stateMachine) : base(name, stateMachine) { }
 
 	public override void StartState()
 	{
 		SM.myInputs.ResetInput(nameof(State_NPC_Move));
-
-		currentTarget = TestNavmeshThings.GetRandomPOI(2);
-
 		NPC_SM.agent.SetDestination(MobSpawner.instance.transform.position);
 		NPC_SM.agent.speed = 6;
 
@@ -138,6 +132,7 @@ public class State_NPC_Leave : NPC_State
 		if ((!NPC_SM.agent.pathPending && !NPC_SM.agent.hasPath) || (NPC_SM.agent.remainingDistance <= 0.05f))
 		{
 			SM.gameObject.layer = LayerMask.NameToLayer("NPC");
+			GameManager.instance.dataSystem.npcCount--;
 			NPC_SM.gameObject.SetActive(false);
 		}
 	}
@@ -161,14 +156,20 @@ public class State_NPC_Leave : NPC_State
 
 public class State_NPC_Knockdown : NPC_State
 {
-	Vector2 currentMotion;
-	float downTime = 2;
-	float counter = 0;
+	protected Vector2 currentMotion;
+	protected float downTime = 2;
+	protected float counter = 0;
 
 	public State_NPC_Knockdown(string name, NPC_StateMachine stateMachine) : base(name, stateMachine) { }
 
 	public override void StartState()
 	{
+		if (Random.value < 0.35f)
+		{
+			GameObject dropCandy = GameObject.Instantiate(NPC_SM.candyDrop);
+			dropCandy.transform.position = SM.transform.position;
+		}
+
 		SM.myInputs.ResetInput(nameof(State_NPC_Knockdown));
 		currentMotion = SM.myInputs.MoveInput;
 		SM.gameObject.layer = LayerMask.NameToLayer("NPCdown");

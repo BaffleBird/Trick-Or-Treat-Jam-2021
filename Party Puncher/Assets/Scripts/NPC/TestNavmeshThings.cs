@@ -41,4 +41,27 @@ public class TestNavmeshThings : MonoBehaviour
 
         return randomCirclePoint;
     }
+
+    public static Vector3 GetRandomFurthestPOI(float radius, Vector3 position)
+	{
+        Transform furthestPOI = POI_list[0];
+        float distance = Vector3.Distance(position, furthestPOI.position);
+        for (int i = 0; i < POI_list.Count; i++)
+		{
+            float newDistance = Vector3.Distance(position, POI_list[i].position);
+            if (newDistance > distance)
+			{
+                furthestPOI = POI_list[i];
+                distance = newDistance;
+			}
+        }
+        Vector3 randomCirclePoint = Random.insideUnitCircle * radius;
+        randomCirclePoint += furthestPOI.position;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomCirclePoint, out hit, radius, 1))
+            randomCirclePoint = hit.position;
+
+        return randomCirclePoint;
+    }
 }

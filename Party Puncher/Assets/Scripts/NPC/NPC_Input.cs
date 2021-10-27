@@ -14,14 +14,14 @@ public class NPC_Input : InputHandler
 		AddInput(nameof(State_NPC_GoForCandy));
 	}
 
+	private void OnEnable()
+	{
+		ForceInput(nameof(State_NPC_Move));
+	}
+
 	private void Update()
 	{
 		//Stick some simple AI stuff here
-		if(Keyboard.current.qKey.wasPressedThisFrame)
-		{
-			inputs[nameof(State_NPC_Move)] = true;
-		}
-
 		//Run a Counter that activates a random input every once in a while?
 		//Make a State transitions to a random state?
 	}

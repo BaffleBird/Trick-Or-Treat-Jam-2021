@@ -21,6 +21,9 @@ public class PlayerStateMachine : StateMachine
 		States.Add(nameof(State_Player_ReadyCandy), new State_Player_ReadyCandy(nameof(State_Player_ReadyCandy), this));
 		States.Add(nameof(State_Player_ThrowCandy), new State_Player_ThrowCandy(nameof(State_Player_ThrowCandy), this));
 		States.Add(nameof(State_Player_Shove), new State_Player_Shove(nameof(State_Player_Shove), this));
+		States.Add(nameof(State_Player_Windup), new State_Player_Windup(nameof(State_Player_Windup), this));
+		States.Add(nameof(State_Player_Punch), new State_Player_Punch(nameof(State_Player_Punch), this));
+		States.Add(nameof(State_Player_Kick), new State_Player_Kick(nameof(State_Player_Kick), this));
 
 		_myStatus = new EntityStatus();
 
@@ -32,7 +35,7 @@ public class PlayerStateMachine : StateMachine
 	protected override void Update()
 	{
 		base.Update();
-		TextUpdate.Instance.SetText("State", myStatus.currentState);
+		//TextUpdate.Instance.SetText("State", myStatus.currentState);
 	}
 
 	protected override void SwitchState(State newState)

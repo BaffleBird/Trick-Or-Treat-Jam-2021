@@ -23,10 +23,11 @@ public class PlayerInputHandler : InputHandler
 		playerControls.PlayerInGameButtons.Sprint.performed += ctx => inputs["Sprint"] = true;
 		playerControls.PlayerInGameButtons.Sprint.canceled += ctx => inputs["Sprint"] = false;
 
-		playerControls.PlayerInGameButtons.Attack.started += ctx => inputs["Attack"] = true;
+		playerControls.PlayerInGameButtons.Attack.performed += ctx => inputs["Attack"] = true;
 		playerControls.PlayerInGameButtons.AttackHold.performed += ctx => inputs["AttackHold"] = true;
+
 		playerControls.PlayerInGameButtons.AttackHold.canceled += ctx => inputs["AttackHold"] = false;
-		playerControls.PlayerInGameButtons.Attack.canceled += ctx => inputs["AttackHold"] = false;
+		playerControls.PlayerInGameButtons.Attack.canceled += ctx => inputs["Attack"] = false;
 
 		playerControls.PlayerInGameButtons.ThrowCandy.performed += ctx => inputs["ThrowCandy"] = true;
 		playerControls.PlayerInGameButtons.ThrowCandy.canceled += ctx => inputs["ThrowCandy"] = false;

@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    //Systems Instantiations
+    public DataSystem dataSystem = new DataSystem();
+
 	//Unity Singleton
 	#region Singleton
     //Basically only one of this class can exist across scenes. If you need something from it, call GameManager.instance.whatever
@@ -28,16 +31,42 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+	private void Update()
+	{
+        dataSystem.Update();
+	}
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    //Things to do at after scene loads
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "GameScene")
+        {
+            dataSystem.Reset();
+        }
+    }
+
     //Set of scene names
-    public enum Scene
+    public enum Scenes
     {
         MainMenuScene,
         GameScene
     }
 
     //Load function for game scenes
-    public static void Load(Scene scene)
+    public static void Load(Scenes scene)
     {
         SceneManager.LoadScene(scene.ToString());
     }
+
+    
 }
