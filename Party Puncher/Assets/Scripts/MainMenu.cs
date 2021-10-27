@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
 
     public void Start()
     {
+        // Hide settings popup initially
         displayPopup.transform.localScale = Vector2.zero;
     }
 
@@ -17,12 +18,12 @@ public class MainMenu : MonoBehaviour
         GameManager.Load(GameManager.Scene.GameScene);
     }
 
-    public void DisplayOpen()
+    public void SettingsOpen()
     {
         displayPopup.transform.LeanScale(Vector2.one, 0.5f);
     }
 
-    public void DisplayClose()
+    public void SettingsClose()
     {
         displayPopup.transform.LeanScale(Vector2.zero, 0.5f);
     }
@@ -35,6 +36,6 @@ public class MainMenu : MonoBehaviour
     // Test scene for music persistence; delete later
     public void MusicButton()
     {
-        GameManager.Load(GameManager.Scene.TestMusic1);
+        AudioManager.Instance.Play("Punch");
     }
 }
