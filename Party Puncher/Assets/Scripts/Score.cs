@@ -6,6 +6,6 @@ public class Score : MonoBehaviour
 {
     public void MainMenuButton()
     {
-        GameManager.Load(GameManager.Scene.MainMenu);
+        GameManager.Load(GameManager.Scenes.MainMenu);
     }
 }
