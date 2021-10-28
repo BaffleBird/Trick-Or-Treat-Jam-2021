@@ -58,7 +58,7 @@ public class StateMachine : MonoBehaviour
 		currentState = newState;
 		currentState.StartState();
 	}
-
+	 
 	public void SwitchState(string stateName)
 	{
 		if (myStatus.GetCooldownReady(stateName))
@@ -69,7 +69,6 @@ public class StateMachine : MonoBehaviour
 
 	protected virtual void OnDrawGizmos()
 	{
-		
 	}
 }
 
@@ -93,4 +92,5 @@ public abstract class State
 	public virtual void TestUpdate() { }
 	public abstract Vector2 MotionUpdate();
 	public abstract void EndState();
+	public abstract void Transition();
 }

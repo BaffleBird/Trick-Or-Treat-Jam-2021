@@ -8,10 +8,10 @@ public class GameManager : MonoBehaviour
     //Systems Instantiations
     public DataSystem dataSystem = new DataSystem();
 
-    //Unity Singleton
-    #region Singleton
+	//Unity Singleton
+	#region Singleton
     //Basically only one of this class can exist across scenes. If you need something from it, call GameManager.instance.whatever
-    private static GameManager _instance;
+	private static GameManager _instance;
     public static GameManager instance => _instance; // Global Reference
 
     private void Awake()
@@ -36,10 +36,10 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void Update()
-    {
+	private void Update()
+	{
         dataSystem.Update();
-    }
+	}
 
     private void OnDisable()
     {
@@ -59,8 +59,7 @@ public class GameManager : MonoBehaviour
     public enum Scenes
     {
         MainMenuScene,
-        GameScene,
-        ScoreScene
+        GameScene
     }
 
     //Load function for game scenes
@@ -69,5 +68,5 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(scene.ToString());
     }
 
-
+    
 }

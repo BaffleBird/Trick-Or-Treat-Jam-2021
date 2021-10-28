@@ -16,10 +16,10 @@ TagManager:
   - NPC
   - NPCdown
   - Walls
-  - 
-  - 
-  - 
-  - 
+  - NPCSpawn
+  - PlayerPhase
+  - Enemy
+  - CandyPickup
   - 
   - 
   - 
