@@ -17,10 +17,10 @@ public class GameManager : MonoBehaviour
     //Systems Instantiations
     public DataSystem dataSystem = new DataSystem();
 
-	//Unity Singleton
-	#region Singleton
+    //Unity Singleton
+    #region Singleton
     //Basically only one of this class can exist across scenes. If you need something from it, call GameManager.instance.whatever
-	private static GameManager _instance;
+    private static GameManager _instance;
     public static GameManager instance => _instance; // Global Reference
 
     private void Awake()
@@ -45,8 +45,8 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-	private void Update()
-	{
+    private void Update()
+    {
         dataSystem.Update();
         if(Keyboard.current.pKey.wasPressedThisFrame)
 		{
@@ -93,8 +93,9 @@ public class GameManager : MonoBehaviour
     //Set of scene names
     public enum Scenes
     {
-        MainMenuScene,
-        GameScene
+        MainMenu,
+        GameScene,
+        ScoreScene
     }
 
     //Load function for game scenes
@@ -111,7 +112,5 @@ public class GameManager : MonoBehaviour
             fadeOutTime = 5;
             endGame = true;
 		}
-	}
-
-    
+	}  
 }
