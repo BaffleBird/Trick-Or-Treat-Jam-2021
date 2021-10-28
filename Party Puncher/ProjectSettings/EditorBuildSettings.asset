@@ -14,10 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 992319c0f7034a6448118f48285890ec
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/TestMusic1.unity
-    guid: 266f848daffa7384585b8907805b05b1
-  - enabled: 1
-    path: Assets/Scenes/TestMusic2.unity
-    guid: 5a0157b6f3056334490d7f76904108cd
+    path: Assets/Scenes/ScoreScene.unity
+    guid: 198379c54bbff3c49a710f908f3b7ee3
   m_configObjects: {}

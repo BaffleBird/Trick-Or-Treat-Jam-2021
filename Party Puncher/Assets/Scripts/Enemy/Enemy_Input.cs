@@ -19,7 +19,7 @@ public class Enemy_Input : NPC_Input
         AddInput(nameof(State_Enemy_Die));
         AddInput(nameof(State_Enemy_Sus));
 
-        timeBomb = Random.Range(20, 30);
+        timeBomb = Random.Range(25, 35);
     }
  
 
@@ -42,7 +42,7 @@ public class Enemy_Input : NPC_Input
         else if (timeBomb <= 0)
 		{
             ForceInput(nameof(State_Enemy_Scare));
-            timeBomb = Random.Range(20, 30);
+            timeBomb = Random.Range(25, 35);
         }
     }
 }

@@ -73,7 +73,6 @@ public class State_Enemy_Knockdown: State_NPC_Knockdown
 	{
 		if (currentMotion.sqrMagnitude < 0.01f && counter <= 0)
 		{
-
 			if (SM.myInputs.GetInput(nameof(State_Enemy_Die)))
 				SM.SwitchState(nameof(State_Enemy_Die));
 			else if (SM.myInputs.GetInput(nameof(State_NPC_Leave)))
@@ -166,6 +165,7 @@ public class State_Enemy_Scare : NPC_State
 	{
 		SM.myAnimator.Play("Scare");
 		contactFilter.SetLayerMask(LayerMask.GetMask("NPC"));
+		AudioManager.Instance.Play("Roar");
 	}
 
 	public override void UpdateState()
@@ -227,12 +227,13 @@ public class State_Enemy_Die: NPC_State
 
 	public override void UpdateState()
 	{
-		SM.mySprite.color = Color.Lerp(SM.mySprite.color, c, 0.01f);
-		NPC_SM.myShadow.color = Color.Lerp(SM.mySprite.color, c, 0.01f);
+		SM.mySprite.color = Color.Lerp(SM.mySprite.color, c, 0.02f);
+		NPC_SM.myShadow.color = Color.Lerp(SM.mySprite.color, c, 0.02f);
 		if (SM.mySprite.color.a <= 0.01f)
 		{
 			SM.gameObject.layer = LayerMask.NameToLayer("NPC");
 			GameManager.instance.dataSystem.enemyCount--;
+			GameManager.instance.dataSystem.enemiesDefeated++;
 			GameManager.instance.dataSystem.score += 50;
 			NPC_SM.gameObject.SetActive(false);
 		}
@@ -245,7 +246,6 @@ public class State_Enemy_Die: NPC_State
 
 	public override void EndState()
 	{
-		SM.myInputs.ResetInput(nameof(State_Enemy_Die));
 	}
 
 	public override void Transition()

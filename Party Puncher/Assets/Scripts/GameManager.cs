@@ -48,10 +48,15 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         dataSystem.Update();
-        if(Keyboard.current.pKey.wasPressedThisFrame)
+        if(SceneManager.GetActiveScene().name == "GameScene" && Keyboard.current.pKey.wasPressedThisFrame)
 		{
             pause = !pause;
 		}
+        if(SceneManager.GetActiveScene().name == "GameScene" && Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            EndGame();
+        }
+
 
         if (pause)
             Time.timeScale = 0;
@@ -65,7 +70,7 @@ public class GameManager : MonoBehaviour
             currentTimescale = Mathf.Lerp(currentTimescale, 0, 0.02f);
             Time.timeScale = currentTimescale;
             if (fadeOutTime <= 0)
-                Load(Scenes.MainMenuScene);
+                Load(Scenes.ScoreScene);
         }
         
 	}
@@ -109,7 +114,7 @@ public class GameManager : MonoBehaviour
 	{
         if(SceneManager.GetActiveScene().name == "GameScene")
 		{
-            fadeOutTime = 5;
+            fadeOutTime = 4;
             endGame = true;
 		}
 	}  

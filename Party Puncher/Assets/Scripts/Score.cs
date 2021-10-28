@@ -1,10 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Score : MonoBehaviour
 {
-    public void MainMenuButton()
+    [SerializeField] TextMeshProUGUI killCount;
+    [SerializeField] TextMeshProUGUI timeLasted;
+    [SerializeField] TextMeshProUGUI finalScore;
+
+	private void Start()
+	{
+        killCount.text = GameManager.instance.dataSystem.enemiesDefeated.ToString();
+        int s = (int)(360 - GameManager.instance.dataSystem.timer);
+        timeLasted.text = s.ToString() + " Seconds";
+        finalScore.text = GameManager.instance.dataSystem.finalScore.ToString();
+
+    }
+
+	public void MainMenuButton()
     {
         GameManager.Load(GameManager.Scenes.MainMenu);
     }

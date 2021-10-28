@@ -123,7 +123,7 @@ public class State_NPC_Leave : NPC_State
 		NPC_SM.agent.SetDestination(MobSpawner.instance.transform.position);
 		NPC_SM.agent.speed = 6;
 
-		SM.gameObject.layer = LayerMask.NameToLayer("NPCdown");
+		SM.gameObject.layer = LayerMask.NameToLayer("NPCPhase");
 
 		SM.myAnimator.Play("Move");
 	}
@@ -179,6 +179,8 @@ public class State_NPC_Knockdown : NPC_State
 		NPC_SM.agent.updatePosition = false;
 		SM.myAnimator.Play("Hit");
 		SM.mySprite.flipX = currentMotion.x > 0 ? true : false;
+
+		AudioManager.Instance.Play("Punch");
 
 		counter = downTime;
 	}
