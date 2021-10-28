@@ -60,7 +60,7 @@ public class Enemy_StateMachine : NPC_StateMachine
 		switch (r)
 		{
 			case 0:
-				c.a = 0.85f;
+				c.a = 0.8f;
 				_mySprite.color = c;
 				break;
 			case 1:
@@ -68,7 +68,7 @@ public class Enemy_StateMachine : NPC_StateMachine
 				break;
 			case 2:
 				c = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
-				_mySprite.color = Color.Lerp(_mySprite.color, c, 0.15f);
+				_mySprite.color = Color.Lerp(_mySprite.color, c, 0.2f);
 				break;
 		}
 	}
@@ -83,7 +83,10 @@ public class Enemy_StateMachine : NPC_StateMachine
 	{
 		myInputs.ForceMove(direction * power);
 		myInputs.ForceInput(nameof(State_NPC_Knockdown));
-		if (power >= 20) Die();
+		if (power > 15)
+		{
+			Die();
+		}
 		else if (power > 12) Flee();
 	}
 

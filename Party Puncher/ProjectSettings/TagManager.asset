@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DisplayPopup
   - NPC
+  - FadeScreen
   layers:
   - Default
   - TransparentFX

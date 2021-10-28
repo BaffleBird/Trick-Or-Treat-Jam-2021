@@ -50,8 +50,8 @@ public class State_NPC_Idle : NPC_State
 
 public class State_NPC_Move : NPC_State
 {
-	Vector2 currentTarget;
-	float distanceLimit;
+	protected Vector2 currentTarget;
+	protected float timer;
 
 	public State_NPC_Move(string name, NPC_StateMachine stateMachine) : base(name, stateMachine) { }
 
@@ -64,10 +64,13 @@ public class State_NPC_Move : NPC_State
 		NPC_SM.agent.SetDestination(currentTarget);
 
 		SM.myAnimator.Play("Move");
+
+		timer = 15;
 	}
 
 	public override void UpdateState()
 	{
+		timer -= Time.deltaTime;
 		SM.mySprite.flipX = NPC_SM.agent.desiredVelocity.x > 0 ? false : true;
 
 		Transition();
@@ -103,7 +106,7 @@ public class State_NPC_Move : NPC_State
 		{
 			SM.SwitchState(nameof(State_NPC_Idle));
 		}
-		else if ((!NPC_SM.agent.pathPending && !NPC_SM.agent.hasPath) || (NPC_SM.agent.remainingDistance <= 0.05f))
+		else if ((!NPC_SM.agent.pathPending && !NPC_SM.agent.hasPath) || (NPC_SM.agent.remainingDistance <= 0.05f) || timer <= 0)
 		{
 			SM.SwitchState(nameof(State_NPC_Idle));
 		}

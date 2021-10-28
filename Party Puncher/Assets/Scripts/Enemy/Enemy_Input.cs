@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Enemy_Input : NPC_Input
 {
+    float timeBomb = 10;
+
     void Awake()
     {
         AddInput(nameof(State_NPC_Idle));
@@ -16,14 +18,31 @@ public class Enemy_Input : NPC_Input
         AddInput(nameof(State_Enemy_Scare));
         AddInput(nameof(State_Enemy_Die));
         AddInput(nameof(State_Enemy_Sus));
+
+        timeBomb = Random.Range(20, 30);
     }
+ 
 
     void Update()
     {
-        //Do the same thing as NPCs, but also have an time bomb and include Sus animations I guess
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        timeBomb -= Time.deltaTime;
+        decisionCounter -= Time.deltaTime;
+
+        if (decisionCounter <= 0 && timeBomb >= 0)
         {
-            inputs[nameof(State_Enemy_Scare)] = true;
+            float r = Random.value;
+            if (r < 0.5)
+                ForceInput(nameof(State_NPC_Move));
+            else if (r > 0.8)
+                ForceInput(nameof(State_Enemy_Sus));
+            else
+                ForceInput(nameof(State_NPC_Idle));
+            decisionCounter = Random.Range(7f, 12f);
+        }
+        else if (timeBomb <= 0)
+		{
+            ForceInput(nameof(State_Enemy_Scare));
+            timeBomb = Random.Range(20, 30);
         }
     }
 }

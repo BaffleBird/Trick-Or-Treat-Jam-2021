@@ -31,6 +31,19 @@ public class State_Enemy_Move : State_NPC_Move
 {
 	public State_Enemy_Move(string name, NPC_StateMachine stateMachine) : base(name, stateMachine) { }
 
+	public override void StartState()
+	{
+		SM.myInputs.ResetInput(nameof(State_NPC_Move));
+
+		currentTarget = GameObject.FindWithTag("NPC").transform.position;
+
+		NPC_SM.agent.SetDestination(currentTarget);
+
+		SM.myAnimator.Play("Move");
+
+		timer = 15;
+	}
+
 	public override void Transition()
 	{
 		if (SM.myInputs.GetInput(nameof(State_NPC_Knockdown)))
@@ -60,13 +73,14 @@ public class State_Enemy_Knockdown: State_NPC_Knockdown
 	{
 		if (currentMotion.sqrMagnitude < 0.01f && counter <= 0)
 		{
-			if (SM.myInputs.GetInput(nameof(State_NPC_Leave)))
-				SM.SwitchState(nameof(State_NPC_GetUp)); //Gonna have to modify the Get Up and Leave states for Enemy as well
-			else if (SM.myInputs.GetInput(nameof(State_Enemy_Die)))
-				SM.SwitchState(nameof(State_Enemy_Die));
-		}
 
-			
+			if (SM.myInputs.GetInput(nameof(State_Enemy_Die)))
+				SM.SwitchState(nameof(State_Enemy_Die));
+			else if (SM.myInputs.GetInput(nameof(State_NPC_Leave)))
+				SM.SwitchState(nameof(State_NPC_GetUp)); //Gonna have to modify the Get Up and Leave states for Enemy as well
+			else
+				SM.SwitchState(nameof(State_NPC_Idle));
+		}
 	}
 }
 
@@ -215,10 +229,11 @@ public class State_Enemy_Die: NPC_State
 	{
 		SM.mySprite.color = Color.Lerp(SM.mySprite.color, c, 0.01f);
 		NPC_SM.myShadow.color = Color.Lerp(SM.mySprite.color, c, 0.01f);
-		if (SM.mySprite.color.a == 0)
+		if (SM.mySprite.color.a <= 0.01f)
 		{
 			SM.gameObject.layer = LayerMask.NameToLayer("NPC");
 			GameManager.instance.dataSystem.enemyCount--;
+			GameManager.instance.dataSystem.score += 50;
 			NPC_SM.gameObject.SetActive(false);
 		}
 	}
@@ -230,7 +245,7 @@ public class State_Enemy_Die: NPC_State
 
 	public override void EndState()
 	{
-		SM.myInputs.ResetInput(nameof(State_Enemy_Scare));
+		SM.myInputs.ResetInput(nameof(State_Enemy_Die));
 	}
 
 	public override void Transition()
@@ -262,6 +277,7 @@ public class State_Enemy_Sus: NPC_State
 
 	public override void EndState()
 	{
+		SM.myInputs.ResetInput(nameof(State_Enemy_Sus));
 	}
 
 	public override void Transition()
