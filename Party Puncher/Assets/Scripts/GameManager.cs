@@ -21,8 +21,7 @@ public class GameManager : MonoBehaviour
     {
         MainMenu,
         GameScene,
-        TestMusic1,
-        TestMusic2
+        ScoreScene
     }
 
     // Load function for game scenes
