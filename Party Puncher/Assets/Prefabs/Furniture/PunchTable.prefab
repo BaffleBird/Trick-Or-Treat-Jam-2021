@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7466641000169021388}
   - component: {fileID: 3728102395342501300}
   - component: {fileID: 4688445576383519992}
-  - component: {fileID: -6107083867383287483}
+  - component: {fileID: 3497849506493217559}
   m_Layer: 8
   m_Name: PunchTable
   m_TagString: Untagged
@@ -110,19 +110,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.8125, y: 1.76}
   m_EdgeRadius: 0
---- !u!114 &-6107083867383287483
-MonoBehaviour:
+--- !u!208 &3497849506493217559
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7744802275368612098}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 1
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3.40625, y: 1.38, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.22, z: 0}
+  m_TimeToStationary: 0.5

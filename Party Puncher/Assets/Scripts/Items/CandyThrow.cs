@@ -7,6 +7,7 @@ public class CandyThrow : MonoBehaviour
     [SerializeField] float pulseTime = 1;
 	[SerializeField] int pulseCount = 3;
 	[SerializeField] float pulseEffect = 2;
+	[SerializeField] float range = 8;
 	float timer = 0;
     int counter = 0;
 	List<Collider2D> NPCs = new List<Collider2D>();
@@ -17,8 +18,7 @@ public class CandyThrow : MonoBehaviour
 	{
 		timer = pulseTime;
 		counter = pulseCount;
-		layerMask = LayerMask.GetMask("NPC");
-		layerMask |= 1 << LayerMask.NameToLayer("Walls");
+		layerMask = LayerMask.GetMask("Walls");
 		contactFilter.SetLayerMask(LayerMask.GetMask("NPC"));
 	}
 
@@ -32,7 +32,7 @@ public class CandyThrow : MonoBehaviour
 				//Pulse and hit NPCs
 				// Give them a timer and a move input
 				// NPC Side: Check if already in state, if not, set move input. Timer set to given time plus a little buffer.
-				Physics2D.OverlapCircle(transform.position, 4, contactFilter, NPCs);
+				Physics2D.OverlapCircle(transform.position, range, contactFilter, NPCs);
 				TauntVisibleNPCs();
 				timer = pulseTime;
 				counter--;
@@ -44,7 +44,7 @@ public class CandyThrow : MonoBehaviour
 
 	private void OnDrawGizmosSelected()
 	{
-		Gizmos.DrawWireSphere((Vector2)transform.position, 4);
+		Gizmos.DrawWireSphere((Vector2)transform.position, range);
 	}
 
 	void TauntVisibleNPCs()
@@ -53,13 +53,11 @@ public class CandyThrow : MonoBehaviour
 		{
 			if (NPCs[i] != null)
 			{
-				RaycastHit2D hit = Physics2D.Raycast(transform.position, NPCs[i].transform.position - transform.position, 4, layerMask);
-				if (hit.collider != null && hit.collider.CompareTag("NPC"))
+				if(!Physics2D.Linecast(transform.position, NPCs[i].transform.position, layerMask))
 				{
 					NPC_StateMachine npc = NPCs[i].GetComponent<NPC_StateMachine>();
 					if (npc) npc.CandyPull(pulseEffect, GetValidCandySpot());
 				}
-				NPCs[i] = null;
 			}
 		}
 	}
@@ -67,11 +65,11 @@ public class CandyThrow : MonoBehaviour
 	Vector2 GetValidCandySpot()
 	{
 		Vector2 candySpot = TestNavmeshThings.GetRandomMeshPoint(2.5f, transform.position);
-		RaycastHit2D hit = Physics2D.Raycast(transform.position, candySpot, 4, LayerMask.GetMask("Walls"));
+		RaycastHit2D hit = Physics2D.Raycast(transform.position, candySpot, 4, layerMask);
 		while(hit.collider != null)
 		{
 			candySpot = TestNavmeshThings.GetRandomMeshPoint(2f, transform.position);
-			hit = Physics2D.Raycast(transform.position, candySpot, 4, LayerMask.GetMask("Walls"));
+			hit = Physics2D.Raycast(transform.position, candySpot, 4, layerMask);
 		}
 		return candySpot;
 	}

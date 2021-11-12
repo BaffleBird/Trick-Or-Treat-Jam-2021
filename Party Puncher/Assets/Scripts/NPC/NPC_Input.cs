@@ -36,7 +36,7 @@ public class NPC_Input : InputHandler
 				ForceInput(nameof(State_NPC_Move));
 			else
 				ForceInput(nameof(State_NPC_Idle));
-			decisionCounter = Random.Range(8f,15f);
+			decisionCounter = Random.Range(8f,14f);
 		}
 
 	}

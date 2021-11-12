@@ -44,7 +44,7 @@ public class Enemy_StateMachine : NPC_StateMachine
 				break;
 			case 2:
 				c = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
-				_mySprite.color = Color.Lerp(_mySprite.color, c, 0.4f);
+				_mySprite.color = Color.Lerp(_mySprite.color, c, 0.3f);
 				break;
 		}
 	}
@@ -68,7 +68,7 @@ public class Enemy_StateMachine : NPC_StateMachine
 				break;
 			case 2:
 				c = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
-				_mySprite.color = Color.Lerp(_mySprite.color, c, 0.4f);
+				_mySprite.color = Color.Lerp(_mySprite.color, c, 0.3f);
 				break;
 		}
 	}
@@ -84,13 +84,9 @@ public class Enemy_StateMachine : NPC_StateMachine
 		myInputs.ForceMove(direction * power);
 		myInputs.ForceInput(nameof(State_NPC_Knockdown));
 		if (power > 15)
-		{
 			Die();
-		}
-		else if (power > 12)
-		{
+		else
 			Flee();
-		}
 	}
 
 	public override void CandyPull(float pullTime, Vector2 targetPosition) //Don't grab the candy.

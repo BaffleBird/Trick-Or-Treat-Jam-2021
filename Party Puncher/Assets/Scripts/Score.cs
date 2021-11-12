@@ -12,8 +12,8 @@ public class Score : MonoBehaviour
 	private void Start()
 	{
         killCount.text = GameManager.instance.dataSystem.enemiesDefeated.ToString();
-        int s = (int)(360 - GameManager.instance.dataSystem.timer);
-        timeLasted.text = s.ToString() + " Seconds";
+        int s = (int)(GameManager.instance.dataSystem.startTime - GameManager.instance.dataSystem.timer);
+        timeLasted.text = s.ToString() + "s";
         finalScore.text = GameManager.instance.dataSystem.finalScore.ToString();
 
     }

@@ -72,6 +72,12 @@ public class State_Player_Move : Player_State
 		SM.myAnimator.SetFloat("x_input", SM.myInputs.MoveInput.x);
 		SM.myAnimator.SetFloat("y_input", SM.myInputs.MoveInput.y);
 
+		if(SM.myInputs.GetInput("AnimationHit"))
+		{
+			AudioManager.Instance.PlayAtPoint("Step", SM.transform.position);
+			SM.myInputs.ResetInput("AnimationHit");
+		}
+
 		if (SM.myInputs.MoveInput.x != 0)
 			SM.mySprite.flipX = SM.myInputs.MoveInput.x < 0 ? true : false;
 
@@ -132,6 +138,12 @@ public class State_Player_Sprint : Player_State
 		SM.myAnimator.SetFloat("x_input", SM.myInputs.MoveInput.x);
 		SM.myAnimator.SetFloat("y_input", SM.myInputs.MoveInput.y);
 
+		if (SM.myInputs.GetInput("AnimationHit"))
+		{
+			AudioManager.Instance.PlayAtPoint("Step", SM.transform.position);
+			SM.myInputs.ResetInput("AnimationHit");
+		}
+
 		if (SM.myInputs.MoveInput.x != 0)
 			SM.mySprite.flipX = SM.myInputs.MoveInput.x < 0 ? true : false;
 
@@ -140,7 +152,7 @@ public class State_Player_Sprint : Player_State
 
 	public override void FixedUpdateState()
 	{
-		Physics2D.OverlapCircle((Vector2)SM.transform.position + Vector2.up * 0.8f, SM.myCollider.bounds.size.x * 0.5f, contactFilter, collisions);
+		Physics2D.OverlapCircle((Vector2)SM.transform.position + Vector2.up * 0.8f, SM.myCollider.bounds.size.x * 0.6f, contactFilter, collisions);
 		for (int i = 0; i < collisions.Length; i++)
 		{
 			if (collisions[i] != null)
@@ -155,7 +167,6 @@ public class State_Player_Sprint : Player_State
 				collisions[i] = null;
 			}
 		}
-		
 	}
 
 	public override Vector2 MotionUpdate()
@@ -242,6 +253,7 @@ public class State_Player_ThrowCandy : Player_State
 		float flip = SM.mySprite.flipX ? -1 : 1;
 
 		SM.myAnimator.Play("Throw");
+		AudioManager.Instance.PlayAtPoint("Candy", SM.transform.position);
 	}
 
 	public override void UpdateState()
@@ -288,7 +300,7 @@ public class State_Player_Shove : Player_State
 {
 	float power = 15;
 	float pushRadius = 0.6f;
-	Vector2 offset = new Vector2(0.8f, 0.8f);
+	Vector2 offset = new Vector2(1f, 0.8f);
 	LayerMask layerMask;
 	ContactFilter2D contactFilter = new ContactFilter2D();
 	Collider2D[] collisions = new Collider2D[8];
@@ -322,7 +334,6 @@ public class State_Player_Shove : Player_State
 						bool fearChance = (Random.value < 0.5f);
 						npc.Knockdown(impactDirection, power, fearChance);
 					}
-					collisions[i] = null;
 				}
 			}
 		}
@@ -414,6 +425,7 @@ public class State_Player_Punch : Player_State
 		layerMask = LayerMask.GetMask("NPC");
 		layerMask |= 1 << LayerMask.NameToLayer("Enemy");
 		contactFilter.SetLayerMask(layerMask);
+		AudioManager.Instance.PlayAtPoint("Dash", SM.transform.position);
 	}
 
 	public override void UpdateState()
@@ -431,7 +443,6 @@ public class State_Player_Punch : Player_State
 						Vector2 impactDirection = (Vector2)collisions[i].transform.position - (Vector2)SM.transform.position;
 						npc.Knockdown(impactDirection, power, true);
 					}
-					collisions[i] = null;
 				}
 			}
 		}
@@ -488,6 +499,7 @@ public class State_Player_Kick : Player_State
 		layerMask = LayerMask.GetMask("NPC");
 		layerMask |= 1 << LayerMask.NameToLayer("Enemy");
 		contactFilter.SetLayerMask(layerMask);
+		AudioManager.Instance.PlayAtPoint("Dash", SM.transform.position);
 	}
 
 	public override void UpdateState()
@@ -505,7 +517,6 @@ public class State_Player_Kick : Player_State
 						Vector2 impactDirection = (Vector2)collisions[i].transform.position - (Vector2)SM.transform.position;
 						npc.Knockdown(impactDirection, power, true);
 					}
-					collisions[i] = null;
 				}
 			}
 		}

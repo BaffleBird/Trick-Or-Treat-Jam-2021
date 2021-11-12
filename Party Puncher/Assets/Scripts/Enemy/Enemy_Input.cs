@@ -19,11 +19,15 @@ public class Enemy_Input : NPC_Input
         AddInput(nameof(State_Enemy_Die));
         AddInput(nameof(State_Enemy_Sus));
 
-        timeBomb = Random.Range(25, 35);
+        timeBomb = Random.Range(20, 30);
     }
- 
 
-    void Update()
+	private void OnEnable()
+	{
+        timeBomb = Random.Range(20, 30);
+    }
+
+	void Update()
     {
         timeBomb -= Time.deltaTime;
         decisionCounter -= Time.deltaTime;
@@ -42,7 +46,7 @@ public class Enemy_Input : NPC_Input
         else if (timeBomb <= 0)
 		{
             ForceInput(nameof(State_Enemy_Scare));
-            timeBomb = Random.Range(25, 35);
+            timeBomb = Random.Range(20, 30);
         }
     }
 }

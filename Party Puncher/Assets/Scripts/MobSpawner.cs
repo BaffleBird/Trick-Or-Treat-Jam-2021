@@ -18,14 +18,11 @@ public class MobSpawner : MonoBehaviour
     [SerializeField] GameObject[] NPC_prefabs;
     public List<GameObject> pooledNPCs;
     public int maxNPCs;
-    public int startingNPCs;
 
     [SerializeField] GameObject[] Enemy_prefabs;
     public List<GameObject> pooledEnemies;
     public int maxEnemies;
 
-    [SerializeField] float npcTick = 12;
-    float npcTimer;
     [SerializeField] float enemyTick = 10;
     float enemyTimer;
 
@@ -34,44 +31,33 @@ public class MobSpawner : MonoBehaviour
         SpawnArea = GetComponent<CircleCollider2D>();
         pooledNPCs = new List<GameObject>();
 
-        
+        int n = 0;
         GameObject tmp;
         for (int i = 0; i < maxNPCs; i++)
         {
-            int n = Random.Range(0, NPC_prefabs.Length);
             tmp = Instantiate(NPC_prefabs[n]);
             tmp.SetActive(false);
             pooledNPCs.Add(tmp);
+            n++;
+            if (n >= NPC_prefabs.Length) n = 0;
         }
 
-        if (startingNPCs > maxNPCs) startingNPCs = maxNPCs;
-        if (startingNPCs < 0) startingNPCs = 0;
-
+        n = 0;
         for (int i = 0; i < maxEnemies; i++)
         {
-            int n = Random.Range(0, Enemy_prefabs.Length);
             tmp = Instantiate(Enemy_prefabs[n]);
             tmp.SetActive(false);
             pooledEnemies.Add(tmp);
+            n++;
+            if (n >= NPC_prefabs.Length) n = 0;
         }
 
         SpawnStartingNPCs();
-
-        npcTimer = npcTick;
         enemyTimer = enemyTick;
     }
 
-    
 	private void Update()
 	{
-        //npcTimer -= Time.deltaTime;
-        if (npcTimer <= 0)
-		{
-            SpawnNewNPC();
-            
-            npcTimer = npcTick;
-		}
-
         enemyTimer -= Time.deltaTime;
         if (enemyTimer <= 0)
 		{
@@ -115,7 +101,7 @@ public class MobSpawner : MonoBehaviour
     //Spawn the amount to start with and put each one in a random spot
     public void SpawnStartingNPCs()
 	{
-        for (int i = 0; i < startingNPCs; i++)
+        for (int i = 0; i < pooledNPCs.Count; i++)
         {
             GameObject npc = GetNPC();
             if (npc == null)

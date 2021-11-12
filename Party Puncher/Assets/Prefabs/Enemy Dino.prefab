@@ -77,9 +77,9 @@ NavMeshAgent:
   m_GameObject: {fileID: 3906727192754833394}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.8
+  m_Radius: 0.6
   m_Speed: 3.5
-  m_Acceleration: 12
+  m_Acceleration: 64
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0.2
@@ -124,9 +124,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.3}
   serializedVersion: 2
-  m_Radius: 0.82
+  m_Radius: 0.6
 --- !u!1 &3906727192924415100
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,7 +292,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!95 &3906727193067027598
 Animator:
   serializedVersion: 3

@@ -74,6 +74,17 @@ public class AudioManager : MonoBehaviour
         s.source.Play();
     }
 
+    public void PlayAtPoint(string clipname, Vector2 location)
+    {
+        Sound s = Array.Find(sounds, dummySound => dummySound.clipName == clipname);
+        if (s == null)
+        {
+            Debug.LogError("Sound: " + clipname + " does NOT exist!");
+            return;
+        }
+        AudioSource.PlayClipAtPoint(s.audioClip, location);
+    }
+
     public void Stop(string clipname)
     {
         Sound s = Array.Find(sounds, dummySound => dummySound.clipName == clipname);

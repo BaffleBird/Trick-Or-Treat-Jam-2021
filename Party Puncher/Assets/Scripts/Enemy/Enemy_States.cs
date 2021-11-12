@@ -36,7 +36,7 @@ public class State_Enemy_Move : State_NPC_Move
 		SM.myInputs.ResetInput(nameof(State_NPC_Move));
 
 		currentTarget = GameObject.FindWithTag("NPC").transform.position;
-
+		
 		NPC_SM.agent.SetDestination(currentTarget);
 
 		SM.myAnimator.Play("Move");
@@ -67,7 +67,7 @@ public class State_Enemy_Move : State_NPC_Move
 
 public class State_Enemy_Knockdown: State_NPC_Knockdown
 {
-	public State_Enemy_Knockdown(string name, NPC_StateMachine stateMachine) : base(name, stateMachine) { }
+	public State_Enemy_Knockdown(string name, NPC_StateMachine stateMachine) : base(name, stateMachine) {}
 
 	public override void Transition()
 	{
@@ -75,10 +75,8 @@ public class State_Enemy_Knockdown: State_NPC_Knockdown
 		{
 			if (SM.myInputs.GetInput(nameof(State_Enemy_Die)))
 				SM.SwitchState(nameof(State_Enemy_Die));
-			else if (SM.myInputs.GetInput(nameof(State_NPC_Leave)))
-				SM.SwitchState(nameof(State_NPC_GetUp)); //Gonna have to modify the Get Up and Leave states for Enemy as well
 			else
-				SM.SwitchState(nameof(State_NPC_Idle));
+				SM.SwitchState(nameof(State_NPC_GetUp));
 		}
 	}
 }
@@ -98,7 +96,7 @@ public class State_Enemy_Leave : State_NPC_Leave
 		SM.myInputs.ResetInput(nameof(State_NPC_Move));
 
 		NPC_SM.agent.SetDestination(TestNavmeshThings.GetRandomPOI(2));
-		NPC_SM.agent.speed = 6.5f;
+		NPC_SM.agent.speed = 9f;
 
 		SM.gameObject.layer = LayerMask.NameToLayer("Enemy");
 
@@ -114,13 +112,14 @@ public class State_Enemy_Leave : State_NPC_Leave
 		SM.mySprite.flipX = NPC_SM.agent.desiredVelocity.x > 0 ? false : true;
 
 		if (Physics2D.Linecast(SM.transform.position, player.transform.position, mask))
-		{
 			calmCounter -= Time.deltaTime;
-		}
+		else
+			calmCounter = calmTime;
 
-		if(calmCounter >= 0)
+		if ((!NPC_SM.agent.pathPending && !NPC_SM.agent.hasPath) || (NPC_SM.agent.remainingDistance <= 0.5f) && calmCounter > 0)
 		{
-			NPC_SM.agent.SetDestination(TestNavmeshThings.GetRandomFurthestPOI(4, player.position));
+			Vector2 nextPosition = TestNavmeshThings.GetFleeablePOI(5, SM.transform.position, player.position);
+			NPC_SM.agent.SetDestination(nextPosition);
 		}
 
 		Transition();
@@ -133,7 +132,6 @@ public class State_Enemy_Leave : State_NPC_Leave
 
 	public override void EndState()
 	{
-		SM.myInputs.ResetInput(nameof(State_NPC_Move));
 		NPC_SM.agent.SetDestination(NPC_SM.transform.position);
 	}
 
@@ -142,10 +140,6 @@ public class State_Enemy_Leave : State_NPC_Leave
 		if (SM.myInputs.GetInput(nameof(State_NPC_Knockdown)))
 		{
 			SM.SwitchState(nameof(State_NPC_Knockdown));
-		}
-		else if (SM.myInputs.GetInput(nameof(State_NPC_Idle)))
-		{
-			SM.SwitchState(nameof(State_NPC_Idle));
 		}
 		else if ((!NPC_SM.agent.pathPending && !NPC_SM.agent.hasPath) || (NPC_SM.agent.remainingDistance <= 0.05f) || calmCounter <= 0)
 		{
@@ -165,7 +159,7 @@ public class State_Enemy_Scare : NPC_State
 	{
 		SM.myAnimator.Play("Scare");
 		contactFilter.SetLayerMask(LayerMask.GetMask("NPC"));
-		AudioManager.Instance.Play("Roar");
+		AudioManager.Instance.PlayAtPoint("Roar", SM.transform.position);
 	}
 
 	public override void UpdateState()
@@ -179,9 +173,7 @@ public class State_Enemy_Scare : NPC_State
 				if (collisions[i] != null)
 				{
 					NPC_StateMachine npc = collisions[i].GetComponent<NPC_StateMachine>();
-					if (npc)
-						npc.Flee();
-					collisions[i] = null;
+					if (npc) npc.Flee();
 				}
 			}
 		}

@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     //Other stuff
-    bool pause = false;
     float currentTimescale = 1f;
     bool endGame = false;
     float fadeOutTime = 0;
@@ -48,20 +47,10 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         dataSystem.Update();
-        if(SceneManager.GetActiveScene().name == "GameScene" && Keyboard.current.pKey.wasPressedThisFrame)
-		{
-            pause = !pause;
-		}
         if(SceneManager.GetActiveScene().name == "GameScene" && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             EndGame();
         }
-
-
-        if (pause)
-            Time.timeScale = 0;
-        else
-            Time.timeScale = currentTimescale;
 
         if (endGame)
 		{
@@ -83,16 +72,17 @@ public class GameManager : MonoBehaviour
     //Things to do at after scene loads
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        pause = false;
         endGame = false;
+        dataSystem.gameStart = false;
         fadeOutTime = 0;
         currentTimescale = 1;
         Time.timeScale = currentTimescale;
         if (scene.name == "GameScene")
         {
+            dataSystem.gameStart = true;
             dataSystem.Reset();
             FadeOutScreen = GameObject.FindWithTag("FadeScreen").GetComponent<Image>();
-        } 
+        }       
     }
 
     //Set of scene names

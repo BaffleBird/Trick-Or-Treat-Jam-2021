@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1930733173751737148}
   - component: {fileID: 3035076316334047072}
   - component: {fileID: 395524783082239273}
-  - component: {fileID: 6785345142476013625}
+  - component: {fileID: 1596713108786512989}
   m_Layer: 8
   m_Name: FrontClock
   m_TagString: Untagged
@@ -110,19 +110,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.8125, y: 1.86}
   m_EdgeRadius: 0
---- !u!114 &6785345142476013625
-MonoBehaviour:
+--- !u!208 &1596713108786512989
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2342845752763414711}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 1
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.90625, y: 0.93, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.98, z: 0}
+  m_TimeToStationary: 0.5

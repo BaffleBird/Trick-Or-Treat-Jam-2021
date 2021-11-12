@@ -126,13 +126,32 @@ public class State_NPC_Leave : NPC_State
 		SM.gameObject.layer = LayerMask.NameToLayer("NPCPhase");
 
 		SM.myAnimator.Play("Move");
+
+		int r = Random.Range(0, 4);
+		switch (r)
+		{
+			case 0:
+				AudioManager.Instance.PlayAtPoint("Scream0", SM.transform.position);
+				break;
+			case 1:
+				AudioManager.Instance.PlayAtPoint("Scream1", SM.transform.position);
+				break;
+			case 2:
+				AudioManager.Instance.PlayAtPoint("Scream2", SM.transform.position);
+				break;
+			case 3:
+				AudioManager.Instance.PlayAtPoint("Scream3", SM.transform.position);
+				break;
+		}
+		
+		
 	}
 
 	public override void UpdateState()
 	{
 		SM.mySprite.flipX = NPC_SM.agent.desiredVelocity.x > 0 ? false : true;
 
-		if ((!NPC_SM.agent.pathPending && !NPC_SM.agent.hasPath) || (NPC_SM.agent.remainingDistance <= 0.05f))
+		if ((!NPC_SM.agent.pathPending && !NPC_SM.agent.hasPath) || (NPC_SM.agent.remainingDistance <= 0.5f))
 		{
 			SM.gameObject.layer = LayerMask.NameToLayer("NPC");
 			GameManager.instance.dataSystem.npcCount--;
@@ -160,7 +179,7 @@ public class State_NPC_Leave : NPC_State
 public class State_NPC_Knockdown : NPC_State
 {
 	protected Vector2 currentMotion;
-	protected float downTime = 2;
+	protected float downTime = 1;
 	protected float counter = 0;
 
 	public State_NPC_Knockdown(string name, NPC_StateMachine stateMachine) : base(name, stateMachine) { }
@@ -180,7 +199,7 @@ public class State_NPC_Knockdown : NPC_State
 		SM.myAnimator.Play("Hit");
 		SM.mySprite.flipX = currentMotion.x > 0 ? true : false;
 
-		AudioManager.Instance.Play("Punch");
+		AudioManager.Instance.PlayAtPoint("Punch", SM.transform.position);
 
 		counter = downTime;
 	}
@@ -195,7 +214,6 @@ public class State_NPC_Knockdown : NPC_State
 		}
 
 		Transition();
-		
 	}
 
 	public override Vector2 MotionUpdate()
@@ -242,6 +260,7 @@ public class State_NPC_GetUp : NPC_State
 		NPC_SM.agent.nextPosition = SM.transform.position;
 		NPC_SM.agent.SetDestination(SM.transform.position);
 		NPC_SM.agent.updatePosition = true;
+		SM.myInputs.ResetInput(nameof(State_NPC_Knockdown));
 	}
 
 	public override void Transition()

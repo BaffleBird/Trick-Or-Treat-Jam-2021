@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3527758655971170978}
   - component: {fileID: 738976405881235859}
   - component: {fileID: 2409804096591522568}
-  - component: {fileID: 7409560042750226274}
+  - component: {fileID: 2160867243775407693}
   m_Layer: 8
   m_Name: FrontTable
   m_TagString: Untagged
@@ -110,19 +110,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.875, y: 0.8}
   m_EdgeRadius: 0
---- !u!114 &7409560042750226274
-MonoBehaviour:
+--- !u!208 &2160867243775407693
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3239223025500460812}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 1
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.9375, y: 0.4, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.4, z: 0}
+  m_TimeToStationary: 0.5
